@@ -12,7 +12,7 @@ void wifi_setup                 ();
 void callback                   (char* topic, byte* payload, unsigned int length);
 void reconnect                  ();
 void temp_messen                ();
-void mqtt_callback_aufrufen     ();
+void mqbstt_callback_aufrufen   ();
 
 //////////////////////////////////////////////////////////////////////////// PCF8574 Adresse
 PCF8574 pcf8574(0x20);
@@ -161,6 +161,7 @@ void setup() {
 //*********************************************** Serielle Kommunikation starten
   Serial.begin(115200);
 
+
 //*********************************************** Wifi Setup
 wifi_setup();
 
@@ -229,8 +230,6 @@ void mqtt_callback_aufrufen() {
 
 /////////////////////////////////////////////////////////////////////////// LOOP
 void loop() {
-
-
 
    //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ mqtt Callback aufrufen
   if (millis() - previousMillis_mqtt_callback> interval_mqtt_callback) {
