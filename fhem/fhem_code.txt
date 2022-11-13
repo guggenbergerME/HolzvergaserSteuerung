@@ -1,0 +1,22 @@
+define Holzvergaser_Temp_abgas MQTT_DEVICE
+attr Holzvergaser_Temp_abgas IODev Mosquitto
+attr Holzvergaser_Temp_abgas alias Abgas Temp.
+attr Holzvergaser_Temp_abgas group Holzvergaser Temp.
+attr Holzvergaser_Temp_abgas icon temp_temperature
+attr Holzvergaser_Temp_abgas room 0.23 Holzvergaser
+attr Holzvergaser_Temp_abgas stateFormat grad °C
+attr Holzvergaser_Temp_abgas subscribeReading_grad Heizung/Holzvergaser/temp/abgas
+
+
+
+define Pumpe_Holzvergaser_Heizkreis MQTT_DEVICE
+attr Pumpe_Holzvergaser_Heizkreis IODev Mosquitto
+attr Pumpe_Holzvergaser_Heizkreis alias Pumpe Heizkreis
+attr Pumpe_Holzvergaser_Heizkreis devStateIcon on:rc_GREEN:off off:rc_RED:on
+attr Pumpe_Holzvergaser_Heizkreis group Pumpe
+attr Pumpe_Holzvergaser_Heizkreis icon Ventilator_wind
+attr Pumpe_Holzvergaser_Heizkreis publishSet on off Heizung/Holzvergaser/pumpe/heizkreis/IN
+attr Pumpe_Holzvergaser_Heizkreis room 0.23 Holzvergaser
+attr Pumpe_Holzvergaser_Heizkreis stateFormat Status
+attr Pumpe_Holzvergaser_Heizkreis subscribeReading_Status Heizung/Holzvergaser/pumpe/heizkreis/IN
+attr Pumpe_Holzvergaser_Heizkreis webCmd on:off
