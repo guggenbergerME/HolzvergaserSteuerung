@@ -20,10 +20,10 @@ PCF8574 pcf8574(0x20);
 
 /////////////////////////////////////////////////////////////////////////// Schleifen verwalten
 unsigned long previousMillis_temp_messen = 0; // Spannung Messen
-unsigned long interval_temp_messen = 15000; 
+unsigned long interval_temp_messen = 2000; 
 
 unsigned long previousMillis_mqtt_callback = 0; // Spannung Messen
-unsigned long interval_mqtt_callback = 100; 
+unsigned long interval_mqtt_callback = 1000; 
 
 /////////////////////////////////////////////////////////////////////////// mqtt variable
 char msgToPublish[60];
@@ -100,113 +100,8 @@ void callback(char* topic, byte* payload, unsigned int length) {
               }
       } 
 
-    if (strcmp(topic,"Heizung/Puffer/pumpe/laden/IN")==0) {
 
-        // Kanal A
-        if ((char)payload[0] == 'o' && (char)payload[1] == 'n') {  
-                 Serial.println("Puffer Ladepumpe AN");
-                 pcf8574.digitalWrite(P2, !HIGH);
-                 //client.publish("Relaiskarte_0003/OUT/A","on");
-                delay(100);
-              }
 
-        if ((char)payload[0] == 'o' && (char)payload[1] == 'f' && (char)payload[2] == 'f') {  
-                 Serial.println("Puffer Ladepumpe AUS");
-                 pcf8574.digitalWrite(P2, !LOW);
-                 //client.publish("Relaiskarte_0003/OUT/A","off");
-                delay(100);
-              }
-      } 
-
-    if (strcmp(topic,"Heizung/Puffer/pumpe/entladen/IN")==0) {
-
-        // Kanal A
-        if ((char)payload[0] == 'o' && (char)payload[1] == 'n') {  
-                 Serial.println("Puffer Entladepumpe AN");
-                 pcf8574.digitalWrite(P3, !HIGH);
-                 //client.publish("Relaiskarte_0003/OUT/A","on");
-                delay(100);
-              }
-
-        if ((char)payload[0] == 'o' && (char)payload[1] == 'f' && (char)payload[2] == 'f') {  
-                 Serial.println("Puffer Entladepumpe AUS");
-                 pcf8574.digitalWrite(P3, !LOW);
-                 //client.publish("Relaiskarte_0003/OUT/A","off");
-                delay(100);
-              }
-      }       
-
-    if (strcmp(topic,"Heizung/Fussboden/pumpe/IN")==0) {
-
-        // Kanal A
-        if ((char)payload[0] == 'o' && (char)payload[1] == 'n') {  
-                 Serial.println("Fussboden Pumpe AN");
-                 pcf8574.digitalWrite(P4, !HIGH);
-                 //client.publish("Relaiskarte_0003/OUT/A","on");
-                delay(100);
-              }
-
-        if ((char)payload[0] == 'o' && (char)payload[1] == 'f' && (char)payload[2] == 'f') {  
-                 Serial.println("Fussboden Pumpe AUS");
-                 pcf8574.digitalWrite(P4, !LOW);
-                 //client.publish("Relaiskarte_0003/OUT/A","off");
-                delay(100);
-              }
-      }   
-
-    if (strcmp(topic,"Heizung/OG/pumpe/IN")==0) {
-
-        // Kanal A
-        if ((char)payload[0] == 'o' && (char)payload[1] == 'n') {  
-                 Serial.println("OG Pumpe AN");
-                 pcf8574.digitalWrite(P5, !HIGH);
-                 //client.publish("Relaiskarte_0003/OUT/A","on");
-                delay(100);
-              }
-
-        if ((char)payload[0] == 'o' && (char)payload[1] == 'f' && (char)payload[2] == 'f') {  
-                 Serial.println("OG Pumpe AUS");
-                 pcf8574.digitalWrite(P5, !LOW);
-                 //client.publish("Relaiskarte_0003/OUT/A","off");
-                delay(100);
-              }
-      }    
-
-    if (strcmp(topic,"Heizung/Holzofen/Wassertasche/pumpe/IN")==0) {
-
-        // Kanal A
-        if ((char)payload[0] == 'o' && (char)payload[1] == 'n') {  
-                 Serial.println("Holzofen Wassertasche Pumpe AN");
-                 pcf8574.digitalWrite(P6, !HIGH);
-                 //client.publish("Relaiskarte_0003/OUT/A","on");
-                delay(100);
-              }
-
-        if ((char)payload[0] == 'o' && (char)payload[1] == 'f' && (char)payload[2] == 'f') {  
-                 Serial.println("Holzofen Wassertasche  Pumpe AUS");
-                 pcf8574.digitalWrite(P6, !LOW);
-                 //client.publish("Relaiskarte_0003/OUT/A","off");
-                delay(100);
-              }
-      }     
-
-    if (strcmp(topic,"Licht/Keller/Heizungsraum/IN")==0) {
-
-        // Kanal A
-        if ((char)payload[0] == 'o' && (char)payload[1] == 'n') {  
-                 Serial.println("Kellerlicht Heizung AN");
-                 pcf8574.digitalWrite(P7, !HIGH);
-                 //client.publish("Relaiskarte_0003/OUT/A","on");
-                delay(100);
-              }
-
-        if ((char)payload[0] == 'o' && (char)payload[1] == 'f' && (char)payload[2] == 'f') {  
-                 Serial.println("Kellerlicht Heizung AUS");
-                 pcf8574.digitalWrite(P7, !LOW);
-                 //client.publish("Relaiskarte_0003/OUT/A","off");
-                delay(100);
-              }
-      }              
 
 }
 
@@ -226,12 +121,6 @@ void reconnect() {
       // ... and resubscribe
       client.subscribe("Heizung/Holzvergaser/geblaese/IN");
       client.subscribe("Heizung/Holzvergaser/pumpe/heizkreis/IN");
-      client.subscribe("Heizung/Puffer/pumpe/laden/IN");
-      client.subscribe("Heizung/Puffer/pumpe/entladen/IN");    
-      client.subscribe("Licht/Keller/Heizungsraum/IN"); 
-      client.subscribe("Heizung/Holzofen/Wassertasche/pumpe/IN"); 
-      client.subscribe("Heizung/OG/pumpe/IN"); 
-      client.subscribe("Heizung/Fussboden/pumpe/IN"); 
 
          
     } else {
